@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+margin:0;
+font-family:serif;
+overflow:hidden;
+}
+
+/* PAGES */
+
+.page{
+position:absolute;
+width:100%;
+height:100vh;
+background-size:cover;
+background-position:center;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+}
+
+.active{
+display:flex;
+}
+
+/* BACKGROUNDS */
+
+#page1{
+background-image:url("https://i.ibb.co/8LYCCL1j/Your-paragraph-text-20260306-023428-0000.png");
+}
+
+#page2{
+background-image:url("https://i.ibb.co/zWqKg12L/Your-paragraph-text-20260306-023453-0000.png");
+}
+
+#page3,#page4,#page5,#page6{
+background-image:url("https://i.ibb.co/wZzFM6cY/Your-paragraph-text-20260306-023516-0000.png");
+}
+
+/* TEXT ANIMATION */
+
+.textAnim{
+opacity:0;
+transform:scale(0.8);
+filter:blur(8px);
+transition:all 0.7s ease;
+}
+
+.textAnim.show{
+opacity:1;
+transform:scale(1);
+filter:blur(0px);
+}
+
+/* BUTTONS */
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+background:white;
+box-shadow:0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* NOTE */
+
+.note{
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:80%;
+height:200px;
+overflow:auto;
+}
+
+.videoGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+width:90%;
+}
+
+video{
+width:100%;
+border-radius:10px;
+}
+
+/* FLOWERS */
+
+.flower{
+position:absolute;
+top:-20px;
+font-size:24px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+
+<div id="page1" class="page active">
+
+<div class="textAnim show">
+<h2>
+Wanna see what I made for you..<br>
+Heh there is no going back.. 😁😝
+</h2>
+</div>
+
+<div>
+<button onclick="nextPage(2)">Yes</button>
+<button onclick="nextPage(2)">Haanji</button>
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div id="page2" class="page">
+
+<div class="textAnim">
+<h1>Happy Birthday 🎉</h1>
+<p>You are very special to me ❤️</p>
+</div>
+
+<button onclick="nextPage(3)">Next</button>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div id="page3" class="page">
+
+<button onclick="openNote()">Open</button>
+
+<div id="noteBox" style="display:none">
+
+<div class="note">
+
+<p>
+
+Write your message here ❤️  
+
+This is where your long birthday note will go.  
+She will scroll and read it like a letter.
+
+</p>
+
+</div>
+
+<br>
+
+<button onclick="closeNote()">Close</button>
+
+</div>
+
+<br>
+
+<button id="nextAfterNote" onclick="nextPage(4)" style="display:none">
+Next
+</button>
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div id="page4" class="page">
+
+<div class="textAnim">
+
+<h2>For You ❤️</h2>
+
+<p>
+
+Write your Shayari here ✨  
+
+You can write multiple lines of poetry here.
+
+</p>
+
+</div>
+
+<button onclick="nextPage(5)">Next</button>
+
+</div>
+
+<!-- PAGE 5 -->
+
+<div id="page5" class="page">
+
+<div class="videoGrid">
+
+<video controls src="video1.mp4"></video>
+<video controls src="video2.mp4"></video>
+<video controls src="video3.mp4"></video>
+<video controls src="video4.mp4"></video>
+<video controls src="video5.mp4"></video>
+<video controls src="video6.mp4"></video>
+
+</div>
+
+<br>
+
+<button onclick="nextPage(6)">Next</button>
+
+</div>
+
+<!-- PAGE 6 -->
+
+<div id="page6" class="page">
+
+<div class="textAnim">
+
+<h2>
+
+Thank you for being in my life ❤️  
+
+I hope this small surprise made you smile.
+
+</h2>
+
+</div>
+
+<button onclick="nextPage(1)">Back to Start</button>
+
+</div>
+
+<script>
+
+function nextPage(num){
+
+let pages=document.querySelectorAll(".page")
+
+pages.forEach(p=>{
+p.classList.remove("active")
+})
+
+let page=document.getElementById("page"+num)
+
+page.classList.add("active")
+
+let text=page.querySelector(".textAnim")
+
+if(text){
+text.classList.remove("show")
+setTimeout(()=>{
+text.classList.add("show")
+},100)
+}
+
+if(num==6){
+startFlowers()
+}
+
+}
+
+/* NOTE */
+
+function openNote(){
+document.getElementById("noteBox").style.display="block"
+}
+
+function closeNote(){
+document.getElementById("noteBox").style.display="none"
+document.getElementById("nextAfterNote").style.display="block"
+}
+
+/* FLOWERS */
+
+function startFlowers(){
+
+for(let i=0;i<30;i++){
+
+let flower=document.createElement("div")
+
+flower.className="flower"
+
+flower.innerHTML="🌸"
+
+flower.style.left=Math.random()*100+"%"
+
+flower.style.animationDuration=(Math.random()*5+5)+"s"
+
+document.body.appendChild(flower)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
