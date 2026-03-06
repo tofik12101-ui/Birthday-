@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Georgia,serif;
+overflow-x:hidden;
+background:black;
+}
+
+/* PAGE */
+
+.page{
+position:absolute;
+width:100%;
+height:100vh;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+box-sizing:border-box;
+background-size:cover;
+background-position:center;
+opacity:0;
+transform:scale(.95);
+transition:all .6s ease;
+}
+
+.page.active{
+display:flex;
+opacity:1;
+transform:scale(1);
+}
+
+/* BACKGROUNDS */
+
+#page1{
+background-image:url("https://i.ibb.co/8LYCCL1j/Your-paragraph-text-20260306-023428-0000.png");
+}
+
+#page2{
+background-image:url("https://i.ibb.co/zWqKg12L/Your-paragraph-text-20260306-023453-0000.png");
+}
+
+#page3,#page4,#page5,#page6,#page7,#page8,#page9,#page10,#page11,#page12{
+background-image:url("https://i.ibb.co/wZzFM6cY/Your-paragraph-text-20260306-023516-0000.png");
+}
+
+/* BUTTON */
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+background:linear-gradient(45deg,#ff8dc7,#ff5fa2);
+color:white;
+box-shadow:0 4px 12px rgba(0,0,0,0.3);
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+button:active{
+transform:scale(.95);
+}
+
+/* NOTE */
+
+.note{
+background:white;
+padding:25px;
+border-radius:15px;
+max-width:95%;
+height:260px;
+overflow:auto;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+text-align:left;
+}
+
+/* VIDEO */
+
+video{
+width:100%;
+max-height:70vh;
+border-radius:12px;
+}
+
+/* PASSWORD */
+
+input{
+padding:10px;
+border-radius:10px;
+border:none;
+text-align:center;
+font-size:16px;
+}
+
+/* ENVELOPE */
+
+.envelope{
+width:200px;
+height:120px;
+background:#ff8dc7;
+position:relative;
+cursor:pointer;
+border-radius:6px;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:100px solid transparent;
+border-right:100px solid transparent;
+border-top:60px solid #ff5fa2;
+transition:.6s;
+transform-origin:top;
+}
+
+.envelope.open:before{
+transform:rotateX(180deg);
+}
+
+/* LOVE METER */
+
+.loveBar{
+width:80%;
+height:25px;
+background:#ffd6e8;
+border-radius:20px;
+overflow:hidden;
+}
+
+#loveFill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff4d88,#ff80bf);
+}
+
+#lovePercent{
+margin-top:10px;
+font-weight:bold;
+}
+
+/* FLOWERS */
+
+.flower{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall linear forwards;
+pointer-events:none;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-10vh) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- PASSWORD PAGE -->
+
+<div id="lockPage" class="page active">
+
+<h2>Enter Password 🔐</h2>
+
+<input id="passwordInput" type="password">
+
+<br><br>
+
+<button onclick="checkPassword()">Enter</button>
+
+</div>
+
+<!-- PAGE 1 -->
+
+<div id="page1" class="page">
+
+<h2>
+Wanna see what I made for you..<br>
+Heh there is no going back.. 😁😝
+</h2>
+
+<div>
+<button onclick="nextPage(2)">Yes</button>
+<button onclick="nextPage(2)">Haanji</button>
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div id="page2" class="page">
+
+<h1>Happy Birthday Cutie... 💗🎀</h1>
+<p>Accept These flowers...🌺💖</p>
+
+<button onclick="nextPage(3)">Next</button>
+
+</div>
+
+<!-- PAGE 3 ENVELOPE -->
+
+<div id="page3" class="page">
+
+<div class="envelope" id="envelope" onclick="openEnvelope()"></div>
+
+<p>Tap the envelope 💌</p>
+
+</div>
+
+<!-- NOTE -->
+
+<div id="notePage" class="page">
+
+<div class="note">
+<p id="loveText"></p>
+</div>
+
+<br>
+
+<button onclick="nextPage(4)">Next</button>
+
+</div>
+
+<!-- SHAYARI PAGE -->
+
+<div id="page4" class="page">
+
+<h2>For You ❤️</h2>
+
+<p>Write your Shayari here ✨</p>
+
+<h3>Love Meter ❤️</h3>
+
+<div class="loveBar">
+<div id="loveFill"></div>
+</div>
+
+<p id="lovePercent">0%</p>
+
+<button onclick="nextPage(5)">Next</button>
+
+</div>
+
+<!-- VIDEO PAGES -->
+
+<div id="page5" class="page">
+<video controls src="video1.mp4"></video>
+<button onclick="nextPage(6)">Next</button>
+</div>
+
+<div id="page6" class="page">
+<video controls src="video2.mp4"></video>
+<button onclick="nextPage(7)">Next</button>
+</div>
+
+<div id="page7" class="page">
+<video controls src="video3.mp4"></video>
+<button onclick="nextPage(8)">Next</button>
+</div>
+
+<div id="page8" class="page">
+<video controls src="video4.mp4"></video>
+<button onclick="nextPage(9)">Next</button>
+</div>
+
+<div id="page9" class="page">
+<video controls src="video5.mp4"></video>
+<button onclick="nextPage(10)">Next</button>
+</div>
+
+<div id="page10" class="page">
+<video controls src="video6.mp4"></video>
+<button onclick="nextPage(11)">Next</button>
+</div>
+
+<!-- FINAL PAGE -->
+
+<div id="page11" class="page">
+
+<h2>
+Thank you for being in my life ❤️  
+I hope this small surprise made you smile.
+</h2>
+
+<button onclick="nextPage(1)">Back to Start</button>
+
+</div>
+
+<script>
+
+/* PASSWORD */
+
+function checkPassword(){
+
+let pass=document.getElementById("passwordInput").value.toLowerCase()
+
+if(pass==="suar" || pass==="kutta" || pass==="harami"){
+
+document.getElementById("lockPage").classList.remove("active")
+nextPage(1)
+
+}else{
+
+alert("Wrong Password 😝")
+
+}
+
+}
+
+/* PAGE SWITCH */
+
+function nextPage(num){
+
+let pages=document.querySelectorAll(".page")
+
+pages.forEach(p=>p.classList.remove("active"))
+
+document.getElementById("page"+num)?.classList.add("active")
+
+if(num==4){
+startLoveMeter()
+}
+
+if(num==11){
+startFlowers()
+}
+
+}
+
+/* ENVELOPE */
+
+function openEnvelope(){
+
+document.getElementById("envelope").classList.add("open")
+
+setTimeout(()=>{
+
+document.getElementById("page3").classList.remove("active")
+document.getElementById("notePage").classList.add("active")
+
+typeWriter()
+
+},700)
+
+}
+
+/* TYPEWRITER */
+
+let message=`Hey... Happy Birthday my cute little girl... Huhh mai nai janta mai kya kahu maine koshish to ki but ye utni badhiya website nai ban payi jitni maine Sochi thi so I am sorry.. and I'll improve ajj aapka birthday hai aur he aapko bana ke dene ke liye mai bohot excited tha mai nai janta mai itna lucky kaise hogya ki mai tujhse mila aur tujhe mujhse pyar hua.. I can't believe it but it's the truth and you know what the time we meet there was a feeling inside me that I might fall for this person and that was true right now I am deeply in love with you I can't believe the fact that it's almost been 2 years.. time really flies fast... And I wanna thank you because you were the beautiful person who shaped a immature and weird kid like me into the person I am now I will never ever forget you and I know can't cause if I try you'll just come up in my dreams and Will haunt me... 😂 I will never try it.. I can live my whole life with only remembering the moments we shared together... The memories we created... I love you much.. and when I say These words I can't truly express what it means.. I mean When I say "I love you" it's not only "I love you" it goes like "I want you for forever, please don't ever forget me, If I just had some powers I'll take us to the Universe where only we exist... And sooooo on" I can't express what I feel when I see you I know sometimes I can be a annoying person but please I am just a kid so forgive me for my nuisance.. I just.. i don't know why but... I am crying while writing this I am not even writing emotional things but this burden of feels so heavy more the time pass by more it feels like You are getting seperated from me and it hurts alot... It's just I love you soo much yarr... kaash Kaash tu meri ho pati.. par mai tujhe bhaga ke bhi to nai le jaa sakta.. kaise rakhuga tujhe.. na mere paas kuch hoga na na mai koi kam ka insaan rahuga.. aur uper se mai nai chahta ki tu uss insaan ko betray kare jisne bachpan se tujhe pyar Diya hai bachpan se tujhe pala hai... Mai nahi chahta uss insaan ko dard pohoche... My heart and my soul completely disagree with this but there is a part of me which is saying these words and it's dominating it... I don't know why I am crying.. it's just... Love you yarr... I'll never marry someone and it's truth I don't want to unless it's you... I'll just adopt a girl and love her and raise her like our own daughter.. it's funny how I am going this much far in the future... But It's better to build a Empire with only Princess rather than a empty Empire with fake Queen... I love you soo much.. this hurts this feeling it hurts... Okay then I'll take a leave cause I am going crazy and crying too at the same time... One more time Happy Birthday 🎈🎂... And I Really Love You... 🎀💗`
+
+let i=0
+
+function typeWriter(){
+
+if(i<message.length){
+
+document.getElementById("loveText").innerHTML+=message.charAt(i)
+
+i++
+
+setTimeout(typeWriter,25)
+
+}
+
+}
+
+/* LOVE METER */
+
+function startLoveMeter(){
+
+let percent=0
+
+let meter=setInterval(()=>{
+
+percent++
+
+document.getElementById("loveFill").style.width=percent+"%"
+
+document.getElementById("lovePercent").innerText=percent+"%"
+
+if(percent>=100){
+clearInterval(meter)
+}
+
+},40)
+
+}
+
+/* FLOWERS */
+
+function startFlowers(){
+
+setInterval(()=>{
+
+let flower=document.createElement("div")
+
+flower.className="flower"
+
+flower.innerHTML="🌸"
+
+flower.style.left=Math.random()*100+"vw"
+
+flower.style.animationDuration=(Math.random()*4+6)+"s"
+
+document.body.appendChild(flower)
+
+setTimeout(()=>flower.remove(),10000)
+
+},300)
+
+}
+
+</script>
+
+</body>
+</html>
